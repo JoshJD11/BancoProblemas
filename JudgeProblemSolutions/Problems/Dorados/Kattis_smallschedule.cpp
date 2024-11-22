@@ -1,20 +1,38 @@
-#include<iostream> //me ganó un corner case
+#include <bits/stdc++.h>
 using namespace std;
 
+int main() {
+    int cantidadTareas, numCompus, sobrantes, limite;
+    cin>>cantidadTareas>>numCompus>>sobrantes>>limite;
 
-int main(){
-    int Q,M,S,L,suma;
-    cin>>Q>>M>>S>>L;
-    suma = (L/M) * Q + S/M;
-    L = L%M;
-    S = S%M;
-    if(!L && !S) cout<<suma<<'\n';
-    else if(!L) cout<<suma+1<<'\n';
-    else if(M-S < L)
-    {
-        int cantUnos = S/(M-L);
-        if(S%(M-L) != 0) cantUnos++;
-        cout<<min(suma + Q + 1, suma + cantUnos)<<'\n';
+    vector<int> cargaCompus(numCompus, 0);
+    int indice = 0;
+    while (indice < limite) {
+        cargaCompus[indice % numCompus] += cantidadTareas;
+        indice++;
     }
-    else cout<<suma + Q<<'\n';
+
+    sort(cargaCompus.begin(), cargaCompus.end());
+
+    indice = 0;
+    while ((indice < numCompus) && sobrantes) {
+        while ((cargaCompus[indice] < cargaCompus[numCompus - 1]) && sobrantes) {
+            cargaCompus[indice]++;
+            sobrantes--;
+        }
+        indice++;
+    }
+
+    if (sobrantes) {
+        indice = 0;
+        while (sobrantes) {
+            cargaCompus[indice % numCompus]++;
+            sobrantes--;
+            indice++;
+        }
+        sort(cargaCompus.begin(), cargaCompus.end());
+    }
+
+    cout<<cargaCompus[numCompus - 1];
+    return 0;
 }

@@ -1,27 +1,26 @@
-#include<iostream> //what? Wrong answer
+#include <bits/stdc++.h>
 using namespace std;
-#include<algorithm>
-#include<vector>
-#define ulli unsigned long long int
 
-int main(){
-    ulli n,x,ans;
-    cin>>n;
-    vector<ulli>v;
-    while(n--)
-    {
-        cin>>x;
-        v.push_back(x);
+int main() {
+    int numArticulos, indiceH = 0, maximo;
+    cin>>numArticulos;
+
+    vector<int> listaArticulos(numArticulos, 0);
+    int indice = 0;
+    while (indice < numArticulos) {
+        cin>>listaArticulos[indice];
+        indice++;
     }
-    sort(v.begin(),v.end(),greater<int>());
-    for(ulli i=0;i<(ulli)v.size();i++)
-    {
-        ans = i;
-        if(v[i]<i+1)
-        {
-            break;
-        }
+
+    sort(listaArticulos.begin(), listaArticulos.end());
+
+    indice = 1;
+    while (indice <= numArticulos) {
+        maximo = min(indice, listaArticulos[numArticulos - indice]);
+        if (maximo > indiceH) indiceH = maximo;
+        indice++;
     }
-    cout<<ans<<'\n';
+
+    cout << indiceH;
     return 0;
 }
